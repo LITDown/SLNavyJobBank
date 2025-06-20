@@ -1,0 +1,444 @@
+﻿@page
+@model SLNavyJobBank.Areas.Identity.Pages.Account.RegisterModel
+@{
+    ViewData["Title"] = "SL Navy Job Bank Registration";
+}
+
+<div class="container navy-registration-container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card navy-registration-card">
+                <div class="card-header navy-card-header text-center">
+                    <div class="navy-logo-container mb-2">
+                        <img src="/images/navy_logo.png" alt="Sri Lanka Navy Logo" class="navy-logo">
+                    </div>
+                    <h2>@ViewData["Title"]</h2>
+                </div>
+                <div class="card-body">
+                    <form method="post" class="navy-registration-form">
+
+                        <!-- NIC Input Section -->
+                        <div class="form-section">
+                            <h4 class="section-title">Personal Identification</h4>
+                            <div class="form-group row">
+                                <label asp-for="Input.NIC" class="col-md-4 col-form-label text-md-right navy-label"></label>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-id-card"></i></span>
+                                        </div>
+                                        <input asp-for="Input.NIC" class="form-control navy-input" placeholder="Enter your NIC number" />
+                                    </div>
+                                    <span asp-validation-for="Input.NIC" class="text-danger navy-error"></span>
+                                </div>
+                            </div>
+                            <div class="text-center mb-4">
+                                <button type="submit" name="action" value="fetch" class="btn btn-primary navy-fetch-btn">
+                                    <i class="fas fa-search mr-2"></i>Fetch Navy Records
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Success Message -->
+                        @if (TempData["SuccessMessage"] != null)
+                        {
+                            <div class="alert alert-success navy-alert">
+                                <i class="fas fa-check-circle mr-2"></i>@TempData["SuccessMessage"]
+                            </div>
+                        }
+
+                        <!-- Service Info Section -->
+                        <div class="form-section">
+                            <h4 class="section-title">Service Information</h4>
+                            @* Full Name *@
+                            <div class="form-group row">
+                                <label asp-for="Input.FullName" class="col-md-4 col-form-label text-md-right navy-label"></label>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-user"></i></span></div>
+                                        <input asp-for="Input.FullName" class="form-control navy-input" readonly />
+                                    </div>
+                                </div>
+                            </div>
+                            @* Navy ID *@
+                            <div class="form-group row">
+                                <label asp-for="Input.NavyId" class="col-md-4 col-form-label text-md-right navy-label"></label>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-id-badge"></i></span></div>
+                                        <input asp-for="Input.NavyId" class="form-control navy-input" readonly />
+                                    </div>
+                                </div>
+                            </div>
+                            @* Rank *@
+                            <div class="form-group row">
+                                <label asp-for="Input.Rank" class="col-md-4 col-form-label text-md-right navy-label"></label>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-star"></i></span></div>
+                                        <input asp-for="Input.Rank" class="form-control navy-input" readonly />
+                                    </div>
+                                </div>
+                            </div>
+                            @* Email *@
+                            <div class="form-group row">
+                                <label asp-for="Input.Email" class="col-md-4 col-form-label text-md-right navy-label"></label>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-envelope"></i></span></div>
+                                        <input asp-for="Input.Email" class="form-control navy-input" readonly />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Account Security Section -->
+                        <div class="form-section">
+                            <h4 class="section-title">Account Security</h4>
+                            <div class="form-group row">
+                                <label asp-for="Input.Password" class="col-md-4 col-form-label text-md-right navy-label"></label>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-lock"></i></span></div>
+                                        <input asp-for="Input.Password" type="password" class="form-control navy-input" placeholder="Create a strong password" />
+                                    </div>
+                                    <small class="form-text text-muted navy-hint">Minimum 8 characters with uppercase, lowercase, and numbers.</small>
+                                    <span asp-validation-for="Input.Password" class="text-danger navy-error"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label asp-for="Input.ConfirmPassword" class="col-md-4 col-form-label text-md-right navy-label"></label>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-lock"></i></span></div>
+                                        <input asp-for="Input.ConfirmPassword" type="password" class="form-control navy-input" placeholder="Confirm your password" />
+                                    </div>
+                                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger navy-error"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Submit -->
+                        <div class="form-group row mb-0">
+                            <div class="col-md-6 offset-md-4">
+                                <button type="submit" name="action" value="register" class="btn btn-success navy-register-btn">
+                                    <i class="fas fa-user-plus mr-2"></i>Complete Registration
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer navy-card-footer text-center">
+                    <p class="mb-0">Sri Lanka Navy - Protecting Our Nation's Seas</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        .navy-logo {
+            max-height: 80px;
+        }
+
+        .section-title {
+            font-weight: 600;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            color: #003366;
+        }
+
+        .navy-label {
+            font-weight: bold;
+        }
+
+        .navy-input {
+            border-radius: 0.25rem;
+        }
+
+        .navy-error {
+            font-size: 0.9em;
+        }
+
+        .navy-fetch-btn, .navy-register-btn {
+            width: 100%;
+        }
+
+        .navy-alert {
+            margin-top: 1rem;
+        }
+
+        .navy-card-footer {
+            background-color: #f8f9fa;
+            font-size: 0.9rem;
+        }
+
+        .navy-registration-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .navy-registration-card {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(10, 36, 99, 0.2);
+            background-color: white;
+        }
+
+        .navy-card-header {
+            background: linear-gradient(135deg, var(--navy-blue), var(--navy-light));
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .navy-logo-container {
+            margin-bottom: 15px;
+        }
+
+        .navy-logo {
+            height: 80px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
+        .navy-card-header h2 {
+            font-family: 'Oswald', sans-serif;
+            font-weight: 700;
+            margin-bottom: 0;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .card-body {
+            padding: 30px;
+        }
+
+        .section-title {
+            position: relative;
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+            font-family: 'Oswald', sans-serif;
+            font-weight: 600;
+            color: var(--navy-blue);
+        }
+
+            .section-title::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 60px;
+                height: 3px;
+                background: var(--navy-gold);
+            }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .navy-label {
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #444;
+        }
+
+        .input-group-text {
+            background: var(--navy-blue);
+            color: white;
+            border: none;
+            border-radius: 5px 0 0 5px !important;
+            min-width: 45px;
+            justify-content: center;
+        }
+
+        .navy-input {
+            border: 1px solid #ddd;
+            border-radius: 0 5px 5px 0 !important;
+            padding: 12px 15px;
+            transition: all 0.3s;
+        }
+
+            .navy-input:focus {
+                border-color: var(--navy-light);
+                box-shadow: 0 0 0 0.2rem rgba(10, 36, 99, 0.15);
+            }
+
+            .navy-input:disabled {
+                background-color: #f8f9fa;
+            }
+
+        .navy-fetch-btn {
+            background: var(--navy-blue);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(10, 36, 99, 0.2);
+        }
+
+            .navy-fetch-btn:hover {
+                background: var(--navy-light);
+                transform: translateY(-2px);
+                box-shadow: 0 6px 10px rgba(10, 36, 99, 0.3);
+            }
+
+            .navy-fetch-btn:active {
+                transform: translateY(0);
+            }
+
+        .navy-register-btn {
+            background: var(--navy-gold);
+            color: var(--navy-dark);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(255, 215, 0, 0.3);
+            width: 100%;
+            max-width: 300px;
+        }
+
+            .navy-register-btn:hover {
+                background: #e6c200;
+                transform: translateY(-2px);
+                box-shadow: 0 6px 12px rgba(255, 215, 0, 0.4);
+            }
+
+        .navy-alert {
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+            margin-bottom: 25px;
+            border-left: 4px solid #28a745;
+        }
+
+        .navy-card-footer {
+            background: var(--navy-white);
+            padding: 15px;
+            text-align: center;
+            font-weight: 500;
+            color: var(--navy-blue);
+            border-top: 1px solid rgba(10, 36, 99, 0.1);
+        }
+
+        .navy-hint {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .navy-error {
+            font-size: 0.9rem;
+            color: #dc3545;
+            margin-top: 5px;
+        }
+
+        .form-section {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .navy-progress {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+            .navy-progress::before {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 0;
+                right: 0;
+                height: 3px;
+                background: #e0e0e0;
+                z-index: 1;
+                transform: translateY(-50%);
+            }
+
+        .progress-step {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            color: #777;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s;
+        }
+
+            .progress-step.active {
+                background: var(--navy-blue);
+                color: white;
+                transform: scale(1.1);
+            }
+
+            .progress-step.completed {
+                background: var(--navy-gold);
+                color: var(--navy-dark);
+            }
+
+        .step-label {
+            position: absolute;
+            top: calc(100% + 10px);
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            font-size: 0.85rem;
+            color: #777;
+            font-weight: 500;
+        }
+
+        .progress-step.completed .step-label,
+        .progress-step.active .step-label {
+            color: var(--navy-blue);
+            font-weight: 600;
+        }
+
+        .navy-form-footer {
+            text-align: center;
+            margin-top: 25px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+            .navy-form-footer a {
+                color: var(--navy-blue);
+                font-weight: 500;
+                text-decoration: none;
+            }
+
+                .navy-form-footer a:hover {
+                    text-decoration: underline;
+                }
+
+      
+       
+        .navy-progress {
+            margin-bottom: 50px;
+        }
+
+        .progress-step {
+            width: 35px;
+            height: 35px;
+            font-size: 0.9rem;
+        }
+
+        .step-label {
+            font-size: 0.75rem;
+        }
+    </style>
+}

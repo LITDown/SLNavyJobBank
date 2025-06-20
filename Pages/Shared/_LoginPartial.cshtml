@@ -1,0 +1,48 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using SLNavyJobBank.Models
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<ul class="navbar-nav">
+@if (SignInManager.IsSignedIn(User))
+{
+    var user = await UserManager.GetUserAsync(User);
+    bool isJobSeeker = await UserManager.IsInRoleAsync(user, "JobSeeker");
+    bool isEmployer = await UserManager.IsInRoleAsync(user, "Employer");
+
+    <li class="nav-item">
+        <span class="nav-link text-dark">Hello @User.Identity?.Name!</span>
+    </li>
+
+    <!-- Show Job Seeker Dashboard Link -->
+    @if (isJobSeeker)
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="JobSeeker" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
+        </li>
+    }
+
+    <!-- Show Employer Dashboard Link -->
+    @if (isEmployer)
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="Employer" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
+        </li>
+    }
+
+    <li class="nav-item">
+        <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
+            <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+        </form>
+    </li>
+}
+else
+{
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+    </li>
+}
+</ul>

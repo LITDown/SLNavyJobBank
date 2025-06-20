@@ -1,0 +1,200 @@
+﻿@* @page
+@model IndexModel
+@{
+    ViewData["Title"] = "Profile";
+    ViewData["ActivePage"] = ManageNavPages.Index;
+}
+
+<h3>@ViewData["Title"]</h3>
+<partial name="_StatusMessage" for="StatusMessage" />
+<div class="row">
+    <div class="col-md-6">
+        <form id="profile-form" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+            <div class="form-floating mb-3">
+                <input asp-for="Username" class="form-control" placeholder="Please choose your username." disabled />
+                <label asp-for="Username" class="form-label"></label>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.PhoneNumber" class="form-control" placeholder="Please enter your phone number."/>
+                <label asp-for="Input.PhoneNumber" class="form-label"></label>
+                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+            </div>
+            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+ *@
+
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "SL Navy Job Bank";
+}
+
+<div class="hero-section text-center">
+    <div class="container py-5">
+        <h1 class="display-4 fw-bold">Welcome to SL Navy Job Bank</h1>
+        <p class="lead">Connecting retired Sri Lanka Navy personnel with meaningful employment opportunities</p>
+        
+        <div class="mt-5">
+            @if (!User.Identity.IsAuthenticated)
+            {
+                <a class="btn btn-navy btn-lg px-5 py-3 me-3" asp-area="Identity" asp-page="/Account/Register">
+                    <i class="fas fa-user-plus me-2"></i>Register as Job Seeker
+                </a>
+                <a class="btn btn-navy-outline btn-lg px-5 py-3" asp-area="Identity" asp-page="/Account/Login">
+                    <i class="fas fa-sign-in-alt me-2"></i>Login
+                </a>
+            }
+            else
+            {
+                <a class="btn btn-navy btn-lg px-5 py-3 me-3" asp-page="/JobListings">
+                    <i class="fas fa-briefcase me-2"></i>Browse Jobs
+                </a>
+                @if (User.IsInRole("Employer") || User.IsInRole("JBDCStaff"))
+                {
+                    <a class="btn btn-success btn-lg px-5 py-3" asp-page="/PostJob">
+                        <i class="fas fa-plus-circle me-2"></i>Post a Job
+                    </a>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row mb-5">
+        <div class="col-md-8 mx-auto text-center">
+            <h2 class="mb-4">How It Works</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="p-4 bg-white rounded shadow">
+                        <div class="bg-navy-blue text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 70px; height: 70px;">
+                            <i class="fas fa-user-check fa-2x"></i>
+                        </div>
+                        <h4>1. Register</h4>
+                        <p>Retired Navy personnel create their profile</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="p-4 bg-white rounded shadow">
+                        <div class="bg-navy-blue text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 70px; height: 70px;">
+                            <i class="fas fa-search fa-2x"></i>
+                        </div>
+                        <h4>2. Find Jobs</h4>
+                        <p>Browse and apply for suitable positions</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="p-4 bg-white rounded shadow">
+                        <div class="bg-navy-blue text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 70px; height: 70px;">
+                            <i class="fas fa-handshake fa-2x"></i>
+                        </div>
+                        <h4>3. Get Hired</h4>
+                        <p>Connect with employers and start new career</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-12">
+            <h2 class="text-center mb-4">Featured Job Categories</h2>
+            <div class="row">
+                <div class="col-md-3 col-6 mb-4">
+                    <a href="#" class="card text-decoration-none text-dark h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-utensils fa-3x mb-3 text-navy"></i>
+                            <h5>Catering & Hospitality</h5>
+                            <p class="text-muted">Chef, Steward, etc.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-3 col-6 mb-4">
+                    <a href="#" class="card text-decoration-none text-dark h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-truck-moving fa-3x mb-3 text-navy"></i>
+                            <h5>Transport & Logistics</h5>
+                            <p class="text-muted">Drivers, Coordinators</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-3 col-6 mb-4">
+                    <a href="#" class="card text-decoration-none text-dark h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-laptop-code fa-3x mb-3 text-navy"></i>
+                            <h5>Information Technology</h5>
+                            <p class="text-muted">IT Support, Developers</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-3 col-6 mb-4">
+                    <a href="#" class="card text-decoration-none text-dark h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-tools fa-3x mb-3 text-navy"></i>
+                            <h5>Engineering</h5>
+                            <p class="text-muted">Civil, Mechanical, Electrical</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h3 class="mb-0">For Employers</h3>
+                </div>
+                <div class="card-body">
+                    <p>Looking to hire skilled and disciplined professionals?</p>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i>Access to highly trained personnel</li>
+                        <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i>Disciplined and reliable workforce</li>
+                        <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i>Specialized skills and experience</li>
+                    </ul>
+                    <div class="mt-4">
+                        @if (User.IsInRole("JBDCStaff"))
+                        {
+                            <a class="btn btn-navy" asp-page="/Admin/CreateEmployer">
+                                <i class="fas fa-user-plus me-2"></i>Create Employer Account
+                            </a>
+                        }
+                        else
+                        {
+                            <p class="text-muted">Contact SL Navy Job Bank to create an employer account</p>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h3 class="mb-0">For Job Seekers</h3>
+                </div>
+                <div class="card-body">
+                    <p>Retired Navy personnel can register and access:</p>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i>Personalized job matching</li>
+                        <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i>Career counseling services</li>
+                        <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i>Resume building tools</li>
+                        <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i>Training opportunities</li>
+                    </ul>
+                    <div class="mt-4">
+                        <a class="btn btn-navy" asp-area="Identity" asp-page="/Account/Register">
+                            <i class="fas fa-user-plus me-2"></i>Register Now
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

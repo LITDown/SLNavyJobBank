@@ -1,0 +1,116 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Log in";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <!-- Reduced width from col-md-6 to col-md-5 -->
+            <div class="card navy-login-card">
+                <div class="card-header navy-login-header">
+                    <h2 class="text-center">@ViewData["Title"]</h2>
+                    <p class="text-center">Sri Lanka Navy Job Bank System</p>
+                </div>
+                <div class="card-body">
+                    <form id="account" method="post">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Input.LoginId" class="form-label">Navy ID or Email</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                <input asp-for="Input.LoginId" class="form-control" autocomplete="username"
+                                       aria-required="true" placeholder="Enter your Navy ID or Email" />
+                            </div>
+                            <span asp-validation-for="Input.LoginId" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Input.Password" class="form-label">Password</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                <input asp-for="Input.Password" class="form-control" autocomplete="current-password"
+                                       aria-required="true" placeholder="Enter your password" />
+                            </div>
+                            <span asp-validation-for="Input.Password" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3 form-check">
+                            <input class="form-check-input" asp-for="Input.RememberMe" />
+                            <label class="form-check-label" asp-for="Input.RememberMe">Remember me</label>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">
+                                <i class="fas fa-sign-in-alt me-2"></i>Log in
+                            </button>
+                        </div>
+
+                        <div class="text-center">
+                            <p>
+                                <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+                            </p>
+                            <p>
+                                <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Styles {
+    <style>
+        .container {
+            max-width: 1025px; /* Added max-width to make container smaller */
+            padding: 2rem 1rem; /* Adjusted padding */
+        }
+
+        .navy-login-card {
+            border: 2px solid #0a2463;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(10, 36, 99, 0.2);
+            margin-top: 2rem; /* Added margin */
+        }
+
+        .navy-login-header {
+            background: linear-gradient(to right, #0a2463, #1e4b8f);
+            color: white;
+            padding: 1.5rem;
+            border-bottom: 2px solid #ffd700;
+            text-align: center;
+        }
+
+            .navy-login-header h2 {
+                margin: 0;
+                font-weight: 600;
+                font-size: 1.5rem; /* Reduced font size */
+            }
+
+        .input-group-text {
+            background-color: #0a2463;
+            color: white;
+            border: 1px solid #0a2463;
+            width: 40px; /* Fixed width for icons */
+        }
+
+        .form-control {
+            padding: 0.5rem 1rem; /* Adjusted padding */
+        }
+
+        .btn-lg {
+            padding: 0.5rem 1rem; /* Adjusted button padding */
+            font-size: 1rem;
+        }
+    </style>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
